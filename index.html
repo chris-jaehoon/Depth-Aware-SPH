@@ -43,6 +43,9 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+  <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 
@@ -127,156 +130,110 @@
 </section>
 
 
-<!-- Teaser video-->
-<section class="hero teaser">
+<!-- Overview -->
+<section class="hero teaser" style="margin-top: 3rem; background-color: #f5f5f5;">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
+    <div class="hero-body has-text-centered">
+    <h2 class="title is-3" style="margin-top: 2rem;">Overview</h2>
+      <img src="static/fig/overview2.png" alt="Teaser Image" style="max-width: 100%; height: auto;" />
+        <h2 class="subtitle mt-4" style="text-align: justify;">
+          <strong>Two key challenges for semantic correspondence:</strong>
+          To find semantic correspondence that matches identical key points between two objects, we propose a novel geometry-aware approach that leverages depth and symmetry priors. 
+          <span style="color: blue;">Blue</span> lines indicate correct matches, while <span style="color: red;">red</span> lines indicate mismatches. 
+          (a) Our depth-aware mapping distinguishes visually similar parts that appear adjacent due to the angle but are distant in 3D space (the car's front and rear wheels).
+          (b) Our symmetry-aware mapping accurately identifies symmetric parts (the cat's left and right ears and paws).
+        </h2>
     </div>
   </div>
 </section>
-<!-- End teaser video -->
+<!-- End Overview -->
 
 <!-- Paper abstract -->
-<section class="section hero is-light">
+<section class="hero teaser">
   <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Semantic correspondence involves matching semantically similar regions across images. Understanding geometry is crucial for distinguishing visually similar but semantically different parts, preventing incorrect matches (e.g., matching the left foot to the right foot). While previous methods have attempted geometry-based approaches, they still face two major challenges. The first is separating visually similar parts that appear adjacent in 2D images but are distant in 3D real-world space. The second is distinguishing between the left and right sides of symmetric objects. To address the first challenge, we propose a depth-aware spherical mapping that employs depth information as a 3D prior during training, enabling separation based on depth variations. For the second, we introduce a symmetric spherical mapping that incorporates bilateral symmetry—a common property of natural objects—as an additional geometric prior. This approach not only distinguishes left from right but also enhances the realism of object representations. By integrating these methods, we present a robust geometry-aware framework for semantic correspondence. Our method achieves state-of-the-art performance on the SPair-71k and PF-PASCAL benchmarks.
-          </p>
-        </div>
-      </div>
+    <div class="hero-body has-text-centered">
+      <h2 class="title is-3" style="margin-top: 2rem;">Abstract</h2>
+      <h2 class="subtitle mt-4" style="text-align: justify;">
+          Semantic correspondence involves matching semantically similar regions across images. Understanding geometry is crucial for distinguishing visually similar but semantically different parts, preventing incorrect matches (e.g., matching the left foot to the right foot). While previous methods have attempted geometry-based approaches, they still face two major challenges. The first is separating visually similar parts that appear adjacent in 2D images but are distant in 3D real-world space. The second is distinguishing between the left and right sides of symmetric objects. To address the first challenge, we propose a depth-aware spherical mapping that employs depth information as a 3D prior during training, enabling separation based on depth variations. For the second, we introduce a symmetric spherical mapping that incorporates bilateral symmetry—a common property of natural objects—as an additional geometric prior. This approach not only distinguishes left from right but also enhances the realism of object representations. By integrating these methods, we present a robust geometry-aware framework for semantic correspondence. Our method achieves state-of-the-art performance on the SPair-71k and PF-PASCAL benchmarks.
+      </h2>
     </div>
   </div>
 </section>
 <!-- End paper abstract -->
 
 
-<!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      <!-- Your image here -->
-      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
+<!-- Method -->
+<section class="hero teaser" style="margin-top: 3rem; background-color: #f5f5f5;">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+
+      <h2 class="title is-3" style="margin-top: 2rem;">Method</h2>
+
+      <!-- Pipeline Section -->
+      <img src="static/fig/main2.png" alt="Pipeline Illustration" style="max-width: 100%; height: auto;" />
+      <h2 class="subtitle mt-4" style="text-align: justify;">
+        <strong>Training Pipeline:</strong>
+        We train \( f_S \) using the original image \( I \) and its flipped image \( I' \). To focus on the object, we mask the images and the corresponding depth map, retaining only the object and its depth values, with the viewpoint provided by the dataset. 
+        Green and blue dots represent points obtained by mapping the pixels of \( I \) and \( I' \) to spherical coordinates, while the green and blue stars indicate their centroids. 
+        The top-down view of the spherical map visualizes depth, using lighter colors (yellow) for closer points and darker colors (purple) for farther ones.
+      </h2>
+
+      <!-- Loss Section -->
+     <img src="static/fig/loss2.png" alt="Geometrical Loss Illustration"
+     style="max-width: 100%; height: auto; margin-top: 3rem;" />
+      <h2 class="subtitle mt-4" style="text-align: justify;">
+      <strong> Geometrical Losses:</strong>
+        The left images show the original image \( I \), the corresponding depth map, and the flipped image \( I' \).
+        <span style="font-weight: 600;">(a) Relative Depth Loss:</span> The depth in the spherical map is aligned with the direction parallel to the viewpoint. In the upper spherical map, semicircles of the same color represent equal depth planes. 
+        The estimated depths of the triplet, \( \mathcal{P}(s_a), \mathcal{P}(s_b), \mathcal{P}(s_c) \), shown in the bottom, are defined as distances from the viewpoint.
+        <span style="font-weight: 600;">(b) Bilateral Symmetry Loss:</span> The green points represent \( S_I \), while the red points, \( S_I^* \), correspond to their mirrored counterparts across the \( y \text{-} z \) plane.
+        The blue points indicate \( S_{I'} \), and star markers denote the mean coordinates of each point set.
+        <span style="font-weight: 600;">(c) Viewpoint Alignment Loss:</span> The green arrows represent the unit directional vector \( \mathbf{u} \) of the mean coordinates, and the red arrows denote the viewpoint vector \( \mathbf{t} \). After training, \( \mathbf{u} \) becomes aligned with \( \mathbf{t} \).
+      </h2>
+
+    </div>
+  </div>
+</section>
+<!-- End Method -->
+
+<!-- Qualitative Results -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+      <h2 class="title is-3" style="margin-top: 2rem;">Qualitative Results</h2>
+      
+      <img src="static/fig/comparison_spair.jpg" alt="Keypoint Matching Results on SPair-71k" style="max-width: 100%; height: auto;" />
+      
+      <h2 class="subtitle mt-4" style="text-align: justify;">
+        <strong>Keypoint matching results on SPair-71k.</strong>
+        <span style="color: blue;">Blue</span> lines show correct matches; <span style="color: red;">red</span> lines show mismatches. 
+        <strong>Left:</strong> Our method successfully matches the car's symmetric upper region and barely visible rear wheel. 
+        <strong>Middle:</strong> Our approach accurately distinguishes the aeroplane's symmetric wings and tail. 
+        <strong>Right:</strong> Ours correctly matches the cat's left and right paws and ears.
       </h2>
     </div>
   </div>
-</div>
-</div>
 </section>
-<!-- End image carousel -->
+<!-- End Qualitative Results -->
 
+<!-- Quantitative Results -->
+<section class="hero teaser" style="margin-top: 3rem; background-color: #f5f5f5;">
+  <div class="container is-max-desktop">
+    <div class="hero-body has-text-centered">
+          <h2 class="title is-3" style="margin-top: 2rem;">Quantitative Results</h2>
 
+      <img src="static/fig/quantitative.jpg" alt="Quantitative Evaluation on SPair-71k" style="max-width: 100%; height: auto;" />
+      
+      <h2 class="subtitle mt-4" style="text-align: justify;">
+        <strong>Evaluation on SPair-71k:</strong> Measured using the <strong>PCK@0.1</strong> metric in a per keypoint manner, including both category-wise results and overall macro average.
+        The best results are highlighted in <strong>bold</strong>, and the second-best results are <span style="text-decoration: underline;">underlined</span>.
+        Results marked with an asterisk use test-time pose alignment, which requires an off-the-shelf segmentation mask.
+      </h2>
 
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- Youtube embed code here -->
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
-<!-- End youtube video -->
-
-
-<!-- Video carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\
-            <!-- Your video file here -->
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End video carousel -->
-
-
-
-
-
-
-<!-- Paper poster -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
-        
-      </div>
-    </div>
-  </section>
-<!--End paper poster -->
-
+<!-- End Quantitative Results -->
 
 <!--BibTex citation -->
   <section class="section" id="BibTeX">
@@ -314,3 +271,6 @@
 
   </body>
   </html>
+
+
+
